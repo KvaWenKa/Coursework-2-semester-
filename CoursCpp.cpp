@@ -9,17 +9,17 @@ using namespace std;
 
 char NameFile[30]; 
 string start,end;			
-int NumEdge = 0; // Номер ребра с которого начинаем 
+int NumEdge = 0; // РќРѕРјРµСЂ СЂРµР±СЂР° СЃ РєРѕС‚РѕСЂРѕРіРѕ РЅР°С‡РёРЅР°РµРј 
 int ActualNode;
 
 
 int ReadFile(){
 	setlocale(LC_ALL, "Russian");
-	cout << "Введите имя файла (.tgf)";cin >> NameFile;
+	cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ С„Р°Р№Р»Р° (.tgf)";cin >> NameFile;
 	ifstream fin;
 	fin.open(NameFile);
 	if(!fin.is_open()){
-		cout << "Ошибка" << endl;
+		cout << "РћС€РёР±РєР°" << endl;
 		ReadFile();
 		return 0;
 	}
@@ -36,9 +36,9 @@ int ReadFile(){
 
 class Graf{
 protected:
-	bool **Matr; //Матрица смежности
-	string *MasLabel; //Массив имен 
-	int QuantNode; //Кол-во узлов
+	bool **Matr; //РњР°С‚СЂРёС†Р° СЃРјРµР¶РЅРѕСЃС‚Рё
+	string *MasLabel; //РњР°СЃСЃРёРІ РёРјРµРЅ 
+	int QuantNode; //РљРѕР»-РІРѕ СѓР·Р»РѕРІ
 public:
 	Graf(int q){
 		QuantNode = q;
@@ -81,7 +81,7 @@ public:
 			}
 		}
 		if(ind > -1){return ind;}
-		cout << "Узел с именем "  << Name << " не найден\n";
+		cout << "РЈР·РµР» СЃ РёРјРµРЅРµРј "  << Name << " РЅРµ РЅР°Р№РґРµРЅ\n";
 		exit(0);
 	}
 	
@@ -108,60 +108,60 @@ public:
 	
 	void ChangeEdge(){
 		Enter();
-		string NameStart,NameEnd; // Имена узлов
-		int s = -1,e = -1; // Индексы узлов
-		cout << "\nКакое ребро изменьть:.\n";
-		cout << "Начало:"; cin >> NameStart;
-		cout << "Конец:"; cin >> NameEnd;
+		string NameStart,NameEnd; // РРјРµРЅР° СѓР·Р»РѕРІ
+		int s = -1,e = -1; // РРЅРґРµРєСЃС‹ СѓР·Р»РѕРІ
+		cout << "\nРљР°РєРѕРµ СЂРµР±СЂРѕ РёР·РјРµРЅСЊС‚СЊ:.\n";
+		cout << "РќР°С‡Р°Р»Рѕ:"; cin >> NameStart;
+		cout << "РљРѕРЅРµС†:"; cin >> NameEnd;
 		s = getIndNode(NameStart);
 		e = getIndNode(NameEnd);
-		cout << "1)Добавить ребро\n2)Удалить ребро\n3)Изменить напрвление ребра.\n(Для выхода нажмите любую другую клавишу)\n";
+		cout << "1)Р”РѕР±Р°РІРёС‚СЊ СЂРµР±СЂРѕ\n2)РЈРґР°Р»РёС‚СЊ СЂРµР±СЂРѕ\n3)РР·РјРµРЅРёС‚СЊ РЅР°РїСЂРІР»РµРЅРёРµ СЂРµР±СЂР°.\n(Р”Р»СЏ РІС‹С…РѕРґР° РЅР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РґСЂСѓРіСѓСЋ РєР»Р°РІРёС€Сѓ)\n";
 		switch(getche()){
-		case '1':// Добавление ребра 
+		case '1':// Р”РѕР±Р°РІР»РµРЅРёРµ СЂРµР±СЂР° 
 			Matr[s][e] = 1;
 			system("cls");
-			cout << "Ребро (" << NameStart << "->" << NameEnd<< ") добавленно.\n\n";
+			cout << "Р РµР±СЂРѕ (" << NameStart << "->" << NameEnd<< ") РґРѕР±Р°РІР»РµРЅРЅРѕ.\n\n";
 			break;
-		case '2':// Удаление ребра
+		case '2':// РЈРґР°Р»РµРЅРёРµ СЂРµР±СЂР°
 			Matr[s][e] = 0;
 			system("cls");
-			cout << "Ребро (" << NameStart << "->" << NameEnd << ") удаленно.\n\n";
+			cout << "Р РµР±СЂРѕ (" << NameStart << "->" << NameEnd << ") СѓРґР°Р»РµРЅРЅРѕ.\n\n";
 			break;
-		case '3':// Изменение направления
+		case '3':// РР·РјРµРЅРµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ
 			system("cls");
-			if(Matr[s][e] == 0){cout << "Дуги нет.\n\n";}
+			if(Matr[s][e] == 0){cout << "Р”СѓРіРё РЅРµС‚.\n\n";}
 			else{
 				Matr[s][e] = 0;
 				Matr[e][s] = 1;
-				cout << "Направление измененно.\n\n";
+				cout << "РќР°РїСЂР°РІР»РµРЅРёРµ РёР·РјРµРЅРµРЅРЅРѕ.\n\n";
 			}
 			break;
 		}
 	}
 	
 	void AddNode(){
-		string NameNewNode;// Имя узла
-		cout << "\nВведите имя узла:"; cin >> NameNewNode;
-		bool BufMatr[QuantNode][QuantNode];// Копия матрицы
-		string BufMasLabel[QuantNode];// Копия массива
-		for(int i = 0; i < QuantNode;i++){ // Копируем значения массива имен и матрицы
+		string NameNewNode;// РРјСЏ СѓР·Р»Р°
+		cout << "\nР’РІРµРґРёС‚Рµ РёРјСЏ СѓР·Р»Р°:"; cin >> NameNewNode;
+		bool BufMatr[QuantNode][QuantNode];// РљРѕРїРёСЏ РјР°С‚СЂРёС†С‹
+		string BufMasLabel[QuantNode];// РљРѕРїРёСЏ РјР°СЃСЃРёРІР°
+		for(int i = 0; i < QuantNode;i++){ // РљРѕРїРёСЂСѓРµРј Р·РЅР°С‡РµРЅРёСЏ РјР°СЃСЃРёРІР° РёРјРµРЅ Рё РјР°С‚СЂРёС†С‹
 			BufMasLabel[i] = MasLabel[i];
 			for(int j = 0; j < QuantNode;j++){
 				BufMatr[i][j] = Matr[i][j];	
 			}
 		}
-		for(int i = 0; i < QuantNode;i++){ // Удаляем матрицу
+		for(int i = 0; i < QuantNode;i++){ // РЈРґР°Р»СЏРµРј РјР°С‚СЂРёС†Сѓ
 			delete [] Matr[i];
 		}
-		delete [] MasLabel;// Удаляем массив
+		delete [] MasLabel;// РЈРґР°Р»СЏРµРј РјР°СЃСЃРёРІ
 		
-		QuantNode++;// Увеличиваем на 1 кол-во узлов
-		MasLabel = new string[QuantNode];// Создаем новый массив
-		Matr = new bool*[QuantNode];// Создаем новую матрицу
+		QuantNode++;// РЈРІРµР»РёС‡РёРІР°РµРј РЅР° 1 РєРѕР»-РІРѕ СѓР·Р»РѕРІ
+		MasLabel = new string[QuantNode];// РЎРѕР·РґР°РµРј РЅРѕРІС‹Р№ РјР°СЃСЃРёРІ
+		Matr = new bool*[QuantNode];// РЎРѕР·РґР°РµРј РЅРѕРІСѓСЋ РјР°С‚СЂРёС†Сѓ
 		for(int i = 0;i < QuantNode;i++){
 			Matr[i] = new bool[QuantNode];
 		}
-		// Записываем значения из старой матрицы в новую
+		// Р—Р°РїРёСЃС‹РІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РёР· СЃС‚Р°СЂРѕР№ РјР°С‚СЂРёС†С‹ РІ РЅРѕРІСѓСЋ
 		for(int i = 0; i < QuantNode;i++){
 			if(i < QuantNode-1){
 				MasLabel[i] = BufMasLabel[i];
@@ -181,37 +181,37 @@ public:
 	}
 	
 	void DeleteNode(){
-		string NameNode;// Имя узла
+		string NameNode;// РРјСЏ СѓР·Р»Р°
 		int IndNode;
 		bool flag = 0;
-		cout << "\nВведите имя узла:"; cin >> NameNode;
-		for(int i = 0;i < QuantNode;i++){// Поиск индексов узлов
+		cout << "\nР’РІРµРґРёС‚Рµ РёРјСЏ СѓР·Р»Р°:"; cin >> NameNode;
+		for(int i = 0;i < QuantNode;i++){// РџРѕРёСЃРє РёРЅРґРµРєСЃРѕРІ СѓР·Р»РѕРІ
 			if(MasLabel[i] == NameNode){flag = 1;IndNode = i;}
 		}
 		if(!flag){
-			cout << "Узел не найден.\n\n";
+			cout << "РЈР·РµР» РЅРµ РЅР°Р№РґРµРЅ.\n\n";
 			return;
 		}
-		bool BufMatr[QuantNode][QuantNode];// Копия матрицы
-		string BufMasLabel[QuantNode];// Копия массива
-		for(int i = 0; i < QuantNode;i++){ // Копируем значения массива имен и матрицы
+		bool BufMatr[QuantNode][QuantNode];// РљРѕРїРёСЏ РјР°С‚СЂРёС†С‹
+		string BufMasLabel[QuantNode];// РљРѕРїРёСЏ РјР°СЃСЃРёРІР°
+		for(int i = 0; i < QuantNode;i++){ // РљРѕРїРёСЂСѓРµРј Р·РЅР°С‡РµРЅРёСЏ РјР°СЃСЃРёРІР° РёРјРµРЅ Рё РјР°С‚СЂРёС†С‹
 			BufMasLabel[i] = MasLabel[i];
 			for(int j = 0; j < QuantNode;j++){
 				BufMatr[i][j] = Matr[i][j];	
 			}
 		}
-		for(int i = 0; i < QuantNode;i++){ // Удаляем матрицу
+		for(int i = 0; i < QuantNode;i++){ // РЈРґР°Р»СЏРµРј РјР°С‚СЂРёС†Сѓ
 			delete [] Matr[i];
 		}
-		delete [] MasLabel;// Удаляем массив
+		delete [] MasLabel;// РЈРґР°Р»СЏРµРј РјР°СЃСЃРёРІ
 		
-		QuantNode--;// Уменьшаем на 1 кол-во узлов
-		MasLabel = new string[QuantNode];// Создаем новый массив
-		Matr = new bool*[QuantNode];// Создаем новую матрицу
+		QuantNode--;// РЈРјРµРЅСЊС€Р°РµРј РЅР° 1 РєРѕР»-РІРѕ СѓР·Р»РѕРІ
+		MasLabel = new string[QuantNode];// РЎРѕР·РґР°РµРј РЅРѕРІС‹Р№ РјР°СЃСЃРёРІ
+		Matr = new bool*[QuantNode];// РЎРѕР·РґР°РµРј РЅРѕРІСѓСЋ РјР°С‚СЂРёС†Сѓ
 		for(int i = 0;i < QuantNode;i++){
 			Matr[i] = new bool[QuantNode];
 		}
-		// Записываем значения из старой матрицы в новую
+		// Р—Р°РїРёСЃС‹РІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РёР· СЃС‚Р°СЂРѕР№ РјР°С‚СЂРёС†С‹ РІ РЅРѕРІСѓСЋ
 		int k = 0;
 		for(int i = 0; i <= QuantNode;i++){
 			if(i != IndNode){
@@ -353,32 +353,32 @@ void Fill(char NameF[] , int QuantNode){
 void SearchWay(int NEdge, int lM){
 	for(int i = NEdge;i < lM;i++){
 		if(ObjGraf.CheckEdge(ActualNode,i)){
-			if(ActualNode == i || i == ObjWay.getLast() || ObjWay.CheckNode(i)){/*"Пропуск"*/}
+			if(ActualNode == i || i == ObjWay.getLast() || ObjWay.CheckNode(i)){/*"РџСЂРѕРїСѓСЃРє"*/}
 			else if(i == ObjGraf.getIndNode(end)){
 			ObjWay.EnterSpis();
 			}
 			else{
-				ActualNode = i; //Переходим в перед
-				ObjWay + ObjWay.CreateWay(i); // Записываем переход
-				NumEdge = 0; //Начинаем с 0 ребра
+				ActualNode = i; //РџРµСЂРµС…РѕРґРёРј РІ РїРµСЂРµРґ
+				ObjWay + ObjWay.CreateWay(i); // Р—Р°РїРёСЃС‹РІР°РµРј РїРµСЂРµС…РѕРґ
+				NumEdge = 0; //РќР°С‡РёРЅР°РµРј СЃ 0 СЂРµР±СЂР°
 				return;
 			}
 		}
 	}
-	NumEdge = ActualNode + 1;// Начинаем с ребра после предедущего
-	ActualNode = ObjWay.BackWay();	// Записываем прошлый узел
+	NumEdge = ActualNode + 1;// РќР°С‡РёРЅР°РµРј СЃ СЂРµР±СЂР° РїРѕСЃР»Рµ РїСЂРµРґРµРґСѓС‰РµРіРѕ
+	ActualNode = ObjWay.BackWay();	// Р—Р°РїРёСЃС‹РІР°РµРј РїСЂРѕС€Р»С‹Р№ СѓР·РµР»
 }	
 
 void First(){
 	string f = ObjGraf.getNameNode(1);
-	cout << "Идекс первой вершины:" << ObjGraf.getIndNode(f) << endl; 
+	cout << "РРґРµРєСЃ РїРµСЂРІРѕР№ РІРµСЂС€РёРЅС‹:" << ObjGraf.getIndNode(f) << endl; 
 }
 
 void Next(string v, int i){
 	int ind = ObjGraf.getIndNode(v);
 	for(int j = i; j < ObjGraf.getQuantNode();j++){
 		if(ObjGraf.CheckEdge(ind,j)){
-			cout << "Индекс смежной вершины:" << j << endl;
+			cout << "РРЅРґРµРєСЃ СЃРјРµР¶РЅРѕР№ РІРµСЂС€РёРЅС‹:" << j << endl;
 			return;
 		}
 	}
@@ -387,7 +387,7 @@ void Next(string v, int i){
 void Vertex(string v,int i){
 	int ind = ObjGraf.getIndNode(v);
 	if(ObjGraf.CheckEdge(ind,i)){
-		cout << "Вершина:" << ObjGraf.getNameNode(i) << endl;
+		cout << "Р’РµСЂС€РёРЅР°:" << ObjGraf.getNameNode(i) << endl;
 	}
 }
 
@@ -399,14 +399,14 @@ int main() {
 	Fill(NameFile,ObjGraf.getQuantNode());
 	while(true){
 		ObjGraf.Enter();
-		cout << "1)Найти все простые пути.\n2)Изменение ребер.\n3)Добавить узел.\n4)Удалить узел.\n5)FIRST\n6)NEXT\n7)VERTEX\n0)Выход.\n";
+		cout << "1)РќР°Р№С‚Рё РІСЃРµ РїСЂРѕСЃС‚С‹Рµ РїСѓС‚Рё.\n2)РР·РјРµРЅРµРЅРёРµ СЂРµР±РµСЂ.\n3)Р”РѕР±Р°РІРёС‚СЊ СѓР·РµР».\n4)РЈРґР°Р»РёС‚СЊ СѓР·РµР».\n5)FIRST\n6)NEXT\n7)VERTEX\n0)Р’С‹С…РѕРґ.\n";
 		switch(getche()){
 			case '1':
-				cout << "Начало пути:"; cin >> start;
-				cout << "Конец пути:"; cin >> end;
+				cout << "РќР°С‡Р°Р»Рѕ РїСѓС‚Рё:"; cin >> start;
+				cout << "РљРѕРЅРµС† РїСѓС‚Рё:"; cin >> end;
 				system("cls");
-				ActualNode = ObjGraf.getIndNode(start); //Расматриваемый узел
-				ObjWay + ObjWay.CreateWay(ActualNode); //Записываем узел в начало
+				ActualNode = ObjGraf.getIndNode(start); //Р Р°СЃРјР°С‚СЂРёРІР°РµРјС‹Р№ СѓР·РµР»
+				ObjWay + ObjWay.CreateWay(ActualNode); //Р—Р°РїРёСЃС‹РІР°РµРј СѓР·РµР» РІ РЅР°С‡Р°Р»Рѕ
 				NumEdge = 0;
 				while(ObjWay.getHead() != NULL){
 					SearchWay(NumEdge,ObjGraf.getQuantNode());
@@ -431,14 +431,14 @@ int main() {
 				break;
 			case '6':
 				system("cls");
-				cout << "Введите вершину:";cin >> V;
-				cout << "Введите индекс:";cin >> I;
+				cout << "Р’РІРµРґРёС‚Рµ РІРµСЂС€РёРЅСѓ:";cin >> V;
+				cout << "Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ:";cin >> I;
 				Next(V,I);
 				break;
 			case '7':
 				system("cls");
-				cout << "Введите вершину:";cin >> V;
-				cout << "Введите индекс:";cin >> I;
+				cout << "Р’РІРµРґРёС‚Рµ РІРµСЂС€РёРЅСѓ:";cin >> V;
+				cout << "Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ:";cin >> I;
 				Vertex(V,I);
 				break;
 			case '0':
